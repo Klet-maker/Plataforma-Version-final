@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Académica SENA - Centro Agroempresarial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Login -->
+        <div class="login-container" id="login-container">
+            <div class="login-form">
+                <div class="sena-logo">
+                    <img src="https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png" alt="Logo SENA">
+                </div>
+                <h2>Ingreso Plataforma</h2>
+                <form id="loginForm">
+                    <input type="text" id="usuario" placeholder="Usuario" required>
+                    <input type="password" id="contrasena" placeholder="Contraseña" required>
+                    <select id="rol" required>
+                        <option value="">Seleccione Rol</option>
+                        <option value="aprendiz">Aprendiz</option>
+                        <option value="instructor">Instructor</option>
+                    </select>
+                    <button type="submit">Ingresar</button>
+                </form>
+            </div>
+            <div class="noticias-section">
+                <h3><i class="fa-brands fa-facebook"></i> Noticias Centro Agroempresarial</h3>
+                <div class="fb-page"
+                    data-href="https://www.facebook.com/profile.php?id=61575756016479"
+                    data-tabs="timeline"
+                    data-width="340"
+                    data-height="420"
+                    data-small-header="false"
+                    data-adapt-container-width="true"
+                    data-hide-cover="false"
+                    data-show-facepile="true">
+                </div>
+                <div class="ver-mas">
+                    <a href="https://www.facebook.com/profile.php?id=61575756016479" target="_blank">
+                        Ver más en Facebook <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Contenedor principal del dashboard del instructor -->
+        <div id="contenedor-instructor" style="display:none; position:relative;">
+          <button id="logout-instructor" class="logout-btn" style="position:absolute; top:18px; right:24px; display:none;">Cerrar sesión</button>
+          <div id="bienvenida-instructor"></div>
+          <div id="dashboard-instructor">
+            <h2>Fichas/Grupos Asignados</h2>
+            <div id="fichas-instructor-list" class="jornadas-horizontal"></div>
+          </div>
+        </div>
+        <!-- Contenedor para el dashboard general (aprendiz, etc.) -->
+        <div id="dashboard" style="display:none; position:relative;">
+          <button id="logout-aprendiz" class="logout-btn" style="position:absolute; top:18px; right:24px; display:none;">Cerrar sesión</button>
+          <button id="logout-aprendiz-bottom" class="logout-btn" style="margin: 32px auto 0 auto; display:none; position: static; width: fit-content;">Cerrar sesión</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v19.0"></script>
+    <script>
+    // Evento para abrir ficha en nueva pestaña
+    function openFichaInNewTab(fichaId) {
+      // Buscar la ficha en los datos simulados (de app.js)
+      const fichas = [
+        { id: 'ficha1', nombre: 'Ficha 101', aprendices: [
+          { id: 'apr1', nombre: 'Juan Pérez', archivo: 'tarea_juan.pdf', calificacion: null, asistencias: [true, true, false, true] },
+          { id: 'apr2', nombre: 'María Gómez', archivo: 'tarea_maria.pdf', calificacion: null, asistencias: [true, false, false, true] },
+          { id: 'apr3', nombre: 'Carlos Ruiz', archivo: 'tarea_carlos.pdf', calificacion: null, asistencias: [true, true, true, true] },
+        ]},
+        { id: 'ficha2', nombre: 'Ficha 202', aprendices: [
+          { id: 'apr4', nombre: 'Ana Torres', archivo: 'tarea_ana.pdf', calificacion: null, asistencias: [false, true, true, false] },
+          { id: 'apr5', nombre: 'Luis Martínez', archivo: 'tarea_luis.pdf', calificacion: null, asistencias: [true, false, true, true] },
+        ]},
+      ];
+      const ficha = fichas.find(f => f.id === fichaId);
+      if (ficha) {
+        sessionStorage.setItem('fichaActual', JSON.stringify(ficha));
+        window.open('ficha.html?fichaId=' + fichaId, '_blank');
+      }
+    }
+    </script>
+</body>
+</html> 

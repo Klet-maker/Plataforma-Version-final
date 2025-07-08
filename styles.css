@@ -1,0 +1,778 @@
+/* Colores institucionales SENA */
+:root {
+    --sena-verde: #39A900;
+    --sena-verde-oscuro: #277300;
+    --gris-oscuro: #222;
+    --blanco: #fff;
+    --gris-claro: #f4f4f4;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    min-height: 100vh;
+}
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background: var(--blanco);
+    box-shadow: 0 4px 24px rgba(34,34,34,0.08);
+    border-radius: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 900px;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+}
+
+.login-form {
+    flex: 1 1 320px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--blanco);
+}
+
+.sena-logo img {
+    width: 120px;
+    margin-bottom: 16px;
+}
+
+.login-form h2 {
+    color: var(--sena-verde-oscuro);
+    margin-bottom: 24px;
+}
+
+.login-form form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.login-form input, .login-form select {
+    padding: 12px;
+    border: 1px solid var(--gris-oscuro);
+    border-radius: 6px;
+    font-size: 1rem;
+    background: var(--gris-claro);
+    color: var(--gris-oscuro);
+}
+
+.login-form button {
+    background: var(--sena-verde);
+    color: var(--blanco);
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-form button:hover {
+    background: var(--sena-verde-oscuro);
+}
+
+.noticias-section {
+    flex: 1 1 320px;
+    background: var(--sena-verde);
+    color: var(--blanco);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 320px;
+}
+
+.noticias-section h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#noticias-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+}
+
+.noticia {
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.noticia img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.noticia-content {
+    flex: 1;
+}
+
+.noticia-titulo {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.noticia-fecha {
+    font-size: 0.85rem;
+    color: #e0ffe0;
+    margin-bottom: 4px;
+}
+
+.noticia-texto {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+.noticia .ver-facebook {
+    background: var(--blanco);
+    color: var(--sena-verde-oscuro);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.noticia .ver-facebook:hover {
+    background: #e0ffe0;
+}
+
+.ver-mas {
+    text-align: right;
+    margin-top: 8px;
+}
+
+.ver-mas a {
+    color: var(--blanco);
+    text-decoration: underline;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 800px) {
+    .login-container {
+        flex-direction: column;
+        max-width: 98vw;
+    }
+    .noticias-section, .login-form {
+        min-width: unset;
+        width: 100%;
+        padding: 24px 12px;
+    }
+}
+
+/* Carpetas y subcarpetas estilo visual */
+.carpeta, .trimestre-carpeta, .instructor-carpeta, .competencia-carpeta {
+    background: rgba(60, 120, 40, 0.08);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(34,34,34,0.04);
+    font-size: 1.08rem;
+    transition: background 0.2s;
+}
+.carpeta:hover, .trimestre-carpeta:hover, .instructor-carpeta:hover, .competencia-carpeta:hover {
+    background: rgba(60, 120, 40, 0.16);
+}
+.carpeta-icon, .trimestre-carpeta .fa-folder, .instructor-carpeta .fa-folder, .competencia-carpeta .fa-folder {
+    color: #39A900;
+    font-size: 1.3em;
+    margin-right: 8px;
+}
+.trimestre-carpeta {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+.instructor-carpeta {
+    background: rgba(60, 120, 40, 0.05);
+    margin-left: 24px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+.competencia-carpeta {
+    background: rgba(60, 120, 40, 0.03);
+    margin-left: 48px;
+    margin-bottom: 10px;
+    font-size: 1.01rem;
+}
+.actividades-list {
+    list-style: none;
+    padding-left: 60px;
+    margin: 0;
+}
+.actividad-carpeta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    background: rgba(60, 120, 40, 0.02);
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+.actividad-carpeta .fa-file {
+    color: #277300;
+    font-size: 1em;
+    margin-right: 6px;
+}
+
+/* Cards horizontales para instructores y competencias */
+.instructores-cards, .competencias-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    justify-content: flex-start;
+}
+.card-instructor, .card-competencia {
+    background: #f4fff4;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(34,34,34,0.08);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: #277300;
+    cursor: pointer;
+    border: 2px solid #39A900;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.card-instructor:hover, .card-competencia:hover {
+    background: #e0ffe0;
+    box-shadow: 0 4px 16px rgba(34,34,34,0.12);
+}
+.card-instructor .fa-folder, .card-competencia .fa-folder {
+    color: #39A900;
+    font-size: 1.3em;
+}
+
+/* Cards modernas para carpetas */
+.cards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+.card-carpeta {
+    background: #f4fff4;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(34,34,34,0.10);
+    padding: 22px 36px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 1.13rem;
+    font-weight: 500;
+    color: #277300;
+    cursor: pointer;
+    border: 2px solid #39A900;
+    transition: background 0.2s, box-shadow 0.2s, border 0.2s;
+    min-width: 180px;
+}
+.card-carpeta:hover {
+    background: #e0ffe0;
+    box-shadow: 0 6px 24px rgba(34,34,34,0.16);
+    border: 2.5px solid #277300;
+}
+.card-carpeta .fa-folder, .card-carpeta .fa-user, .card-carpeta .fa-file {
+    color: #39A900;
+    font-size: 1.4em;
+}
+
+/* Modal mejorado */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(34,34,34,0.25);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(34,34,34,0.18);
+    padding: 38px 32px 28px 32px;
+    min-width: 340px;
+    max-width: 98vw;
+    min-height: 120px;
+    position: relative;
+    z-index: 1010;
+    animation: modalIn 0.2s;
+}
+@keyframes modalIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.modal .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    background: #39A900;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.4em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.modal .modal-close:hover {
+    background: #277300;
+}
+.modal h3 {
+    margin-top: 0;
+    margin-bottom: 22px;
+    color: #222;
+    text-align: center;
+}
+.modal .cards-grid {
+    margin-bottom: 0;
+}
+.modal .actividades-list {
+    padding-left: 0;
+    margin-top: 18px;
+}
+.actividad-carpeta {
+    background: #f4fff4;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(34,34,34,0.08);
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.05rem;
+    color: #277300;
+}
+.actividad-carpeta .fa-file {
+    color: #277300;
+    font-size: 1.1em;
+}
+.actividad-carpeta .entregar-btn {
+    margin-left: auto;
+}
+
+.graficos-section {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    justify-content: center;
+}
+.graficos-section > div {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(34,34,34,0.06);
+    padding: 24px;
+    min-width: 0;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#graficoEvidencias {
+    width: 260px !important;
+    height: 260px !important;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    background: #277300;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(34,34,34,0.10);
+    transition: background 0.2s;
+    z-index: 10;
+}
+.logout-btn:hover {
+    background: #39A900;
+}
+.aprendiz-dashboard, .instructor-dashboard {
+    position: relative;
+}
+
+.noticias-section .fb-page {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-bottom: 10px;
+    max-width: 340px;
+}
+
+.fichas-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 22px;
+    margin-top: 18px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+.ficha-card {
+    min-width: 320px;
+    max-width: 340px;
+    flex: 0 0 auto;
+}
+.ficha-card {
+    background: #f4fff4;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(34,34,34,0.10);
+    border: 2px solid #39A900;
+    padding: 0 0 18px 0;
+    transition: box-shadow 0.2s, border 0.2s;
+    position: relative;
+}
+.ficha-card:hover {
+    box-shadow: 0 6px 24px rgba(34,34,34,0.16);
+    border: 2.5px solid #277300;
+}
+.ficha-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #277300;
+    padding: 22px 32px 12px 32px;
+    cursor: pointer;
+}
+.ficha-header .fa-folder {
+    color: #39A900;
+    font-size: 1.4em;
+}
+.ficha-header .acordeon-toggle {
+    margin-left: auto;
+    color: #277300;
+    font-size: 1.2em;
+}
+.ficha-grafico {
+    margin-left: 32px;
+}
+.aprendices-table th, .aprendices-table td {
+    padding: 6px 10px;
+    text-align: left;
+}
+.aprendices-table th {
+    background: #e0ffe0;
+    color: #277300;
+    border-radius: 6px;
+}
+.aprendices-table tr {
+    background: #fff;
+    border-radius: 6px;
+}
+.aprendices-table input.feedback-input {
+    border: 1px solid #39A900;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 1em;
+}
+.aprendices-table .guardar-feedback {
+    background: #39A900;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 12px;
+    font-size: 0.98em;
+    margin-left: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.aprendices-table .guardar-feedback:hover {
+    background: #277300;
+}
+
+/* --- Estilos para dashboard con pestañas tipo navegador --- */
+#dashboard-tabs-container {
+  margin-bottom: 20px;
+}
+#dashboard-tabs {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 5px 0;
+  border-bottom: 2px solid #ccc;
+}
+.dashboard-tab {
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  padding: 8px 16px;
+  margin-right: 4px;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.dashboard-tab.active {
+  background: #fff;
+  border-bottom: 2px solid #fff;
+  font-weight: bold;
+}
+.close-tab-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 16px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+.close-tab-btn:hover {
+  color: #d00;
+}
+#dashboard-tab-contents {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0 6px 6px 6px;
+  padding: 16px;
+  min-height: 120px;
+}
+#fichas-list-container {
+  margin-bottom: 30px;
+}
+#fichas-list {
+  list-style: none;
+  padding: 0;
+}
+.ficha-folder {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  background: #e9f0fa;
+  transition: background 0.2s;
+}
+.ficha-folder:hover {
+  background: #d0e3fa;
+}
+.aprendiz-folder {
+  cursor: pointer;
+  padding: 6px 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  background: #f9f9f9;
+  transition: background 0.2s;
+}
+.aprendiz-folder:hover {
+  background: #e0e0e0;
+}
+
+/* Panel de información del aprendiz */
+.aprendiz-info {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid #bcd;
+  border-radius: 8px;
+  background: #f7fbff;
+  max-width: 400px;
+}
+.aprendiz-info h4 {
+  margin-top: 0;
+}
+.aprendiz-info button {
+  margin-left: 8px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  background: #e3e3e3;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.aprendiz-info button:hover {
+  background: #d0e3fa;
+}
+.aprendiz-info input[type="number"] {
+  width: 60px;
+  margin-left: 6px;
+}
+.asistencias-section {
+  margin-top: 16px;
+}
+.grafico-asistencias {
+  margin-top: 18px;
+  text-align: center;
+}
+
+/* Dashboard Instructor */
+#contenedor-instructor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 80vh;
+  width: 100%;
+  margin-top: 40px;
+}
+#bienvenida-instructor {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 2em;
+  font-weight: bold;
+  color: #277300;
+  text-align: center;
+}
+#dashboard-instructor {
+  margin: 0 auto;
+  margin-top: 0;
+  max-width: 1100px;
+  background: #f7fbf4;
+  border-radius: 12px;
+  padding: 32px 36px 36px 36px;
+  box-shadow: 0 2px 8px #0001;
+  border: 2px solid #277300;
+  text-align: center;
+}
+#dashboard-instructor h2 {
+  color: #277300;
+  margin-bottom: 18px;
+}
+#fichas-instructor-list {
+  list-style: none;
+  padding: 0;
+}
+#fichas-instructor-list.jornadas-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 24px;
+}
+#fichas-instructor-list button {
+  min-width: 160px;
+  margin-bottom: 0;
+}
+
+/* Fichas en fila horizontal */
+.fichas-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* Sección de jornadas en dashboard instructor */
+.grupo-jornada {
+  background: #fff;
+  border: 2px solid #277300;
+  border-radius: 14px;
+  max-width: 320px;
+  min-width: 260px;
+  padding: 18px 18px 24px 18px;
+  box-shadow: 0 2px 8px #0001;
+  text-align: center;
+  margin: 0;
+}
+.titulo-jornada {
+  color: #277300;
+  font-size: 1.15em;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.grupo-jornada .fichas-horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.ficha-btn {
+  background: #e9f0ea;
+  color: #277300;
+  border: 2px solid #277300;
+  border-radius: 8px;
+  padding: 16px 32px;
+  font-size: 1.15em;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 170px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px #0001;
+}
+.ficha-btn i {
+  font-size: 1.2em;
+  color: #277300;
+}
+.ficha-btn:hover {
+  background: #277300;
+  color: #fff;
+}
+.ficha-btn:hover i {
+  color: #fff;
+}
+/* Colores de íconos por jornada */
+.grupo-jornada:has(.titulo-jornada:contains('Mañana')) i.fa-folder { color: #fbc02d; }
+.grupo-jornada:has(.titulo-jornada:contains('Tarde')) i.fa-folder { color: #ff7043; }
+.grupo-jornada:has(.titulo-jornada:contains('Noche')) i.fa-folder { color: #1976d2; }
+
+.main-rect {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+  padding: 40px 60px;
+  max-width: 1100px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 

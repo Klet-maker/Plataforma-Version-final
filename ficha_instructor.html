@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ficha - Instructor</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: #f7fbf4;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .ficha-instructor-container {
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px #0002;
+      padding: 32px 36px 36px 36px;
+      border: 2px solid #277300;
+    }
+    #ficha-nombre {
+      color: #277300;
+      font-size: 2em;
+      margin-bottom: 8px;
+    }
+    #ficha-info {
+      font-size: 1.1em;
+      margin-bottom: 18px;
+    }
+    .grafico-avance {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .filtros-aprendices {
+      margin-bottom: 18px;
+      text-align: right;
+    }
+    #filtro-trimestre {
+      font-size: 1em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #277300;
+      margin-left: 8px;
+    }
+    .card-aprendiz {
+      background: #e9f0ea;
+      border: 1.5px solid #277300;
+      border-radius: 10px;
+      margin-bottom: 22px;
+      padding: 18px 22px;
+      box-shadow: 0 1px 6px #0001;
+    }
+    .card-aprendiz h4 {
+      margin: 0 0 8px 0;
+      color: #277300;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .trimestre-badge {
+      background: #277300;
+      color: #fff;
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-size: 0.95em;
+      margin-left: 10px;
+    }
+    .archivos-aprendiz {
+      margin-bottom: 10px;
+    }
+    .btn-descargar {
+      background: #277300;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 4px 12px;
+      margin-right: 8px;
+      cursor: pointer;
+      font-size: 0.98em;
+      transition: background 0.2s;
+    }
+    .btn-descargar:hover {
+      background: #39A900;
+    }
+    .tabla-actividades {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px #0001;
+    }
+    .tabla-actividades th, .tabla-actividades td {
+      padding: 7px 8px;
+      text-align: center;
+      border-bottom: 1px solid #d0e3fa;
+    }
+    .tabla-actividades th {
+      background: #277300;
+      color: #fff;
+      font-weight: bold;
+    }
+    .tabla-actividades tr:last-child td {
+      border-bottom: none;
+    }
+    .input-retro {
+      width: 120px;
+      border-radius: 5px;
+      border: 1px solid #bbb;
+      padding: 3px 6px;
+    }
+    .input-revisado {
+      transform: scale(1.2);
+      accent-color: #277300;
+    }
+  </style>
+</head>
+<body>
+  <div class="ficha-instructor-container">
+    <h2 id="ficha-nombre"></h2>
+    <div id="ficha-info"></div>
+    <div class="grafico-avance">
+      <h3>Avance General de la Ficha</h3>
+      <canvas id="graficoAvanceFicha" width="350" height="200"></canvas>
+    </div>
+    <div class="filtros-aprendices">
+      <label for="filtro-trimestre"><strong>Filtrar por trimestre:</strong></label>
+      <select id="filtro-trimestre">
+        <option value="todos">Todos</option>
+      </select>
+    </div>
+    <h3>Gestión de Actividades</h3>
+    <form id="form-nueva-actividad" style="margin-bottom:18px;display:flex;gap:10px;align-items:flex-end;">
+      <div>
+        <label for="nombre-actividad"><strong>Nombre:</strong></label><br>
+        <input type="text" id="nombre-actividad" required style="padding:4px 8px;border-radius:6px;border:1px solid #277300;">
+      </div>
+      <div>
+        <label for="desc-actividad"><strong>Descripción:</strong></label><br>
+        <input type="text" id="desc-actividad" required style="padding:4px 8px;border-radius:6px;border:1px solid #277300;">
+      </div>
+      <div>
+        <label for="comp-actividad"><strong>Competencia:</strong></label><br>
+        <select id="comp-actividad" required style="padding:4px 8px;border-radius:6px;border:1px solid #277300;">
+          <option value="Competencia 1">Competencia 1</option>
+          <option value="Competencia 2">Competencia 2</option>
+          <option value="Competencia 3">Competencia 3</option>
+          <option value="Competencia 4">Competencia 4</option>
+        </select>
+      </div>
+      <div>
+        <label for="archivo-actividad"><strong>Archivo:</strong></label><br>
+        <input type="file" id="archivo-actividad" accept=".pdf,.doc,.docx,.jpg,.png" required style="padding:4px 0;">
+      </div>
+      <button type="submit" style="background:#277300;color:#fff;border:none;border-radius:6px;padding:7px 18px;cursor:pointer;">Agregar</button>
+    </form>
+    <h3>Aprendices</h3>
+    <div id="lista-aprendices"></div>
+  </div>
+  <script>
+    // Simulación de actividades y entregas
+    const actividadesSimuladas = [
+      { id: 'act1', nombre: 'Actividad 1', descripcion: 'Entrega de informe', total: 1 },
+      { id: 'act2', nombre: 'Actividad 2', descripcion: 'Examen parcial', total: 1 },
+      { id: 'act3', nombre: 'Actividad 3', descripcion: 'Proyecto final', total: 1 }
+    ];
+    // Limpiar datos simulados de aprendices para la demo
+    function limpiarDatosAprendices(ficha) {
+      ficha.aprendices.forEach(apr => {
+        localStorage.removeItem(`aprendiz_ficha_${apr.id}`);
+      });
+    }
+    // Obtener ficha desde sessionStorage
+    function getFicha() {
+      const fichaStr = sessionStorage.getItem('fichaInstructorActual');
+      if (!fichaStr) return null;
+      try { return JSON.parse(fichaStr); } catch { return null; }
+    }
+    // Simular archivos subidos y trimestre por aprendiz
+    function getAprendizData(aprendizId, idxForTrimestre) {
+      const key = `aprendiz_ficha_${aprendizId}`;
+      let data = localStorage.getItem(key);
+      const acts = getActividades();
+      if (data) {
+        try {
+          data = JSON.parse(data);
+          // Sincronizar entregas con actividades actuales
+          if (!data.entregas || data.entregas.length !== acts.length) {
+            // Rehacer entregas manteniendo retro/revisado si es posible
+            const nuevasEntregas = acts.map(act => {
+              const anterior = data.entregas ? data.entregas.find(e => e.actividadId === act.id) : null;
+              return {
+                actividadId: act.id,
+                entregado: anterior ? anterior.entregado : false,
+                retro: anterior ? anterior.retro : '',
+                revisado: anterior ? anterior.revisado : false
+              };
+            });
+            data.entregas = nuevasEntregas;
+            localStorage.setItem(key, JSON.stringify(data));
+          }
+          return data;
+        } catch {}
+      }
+      // Simulación inicial
+      const trimestres = ['I', 'II', 'III', 'IV'];
+      const idx = typeof idxForTrimestre === 'number' ? idxForTrimestre : Math.floor(Math.random()*4);
+      const trimestre = trimestres[idx % trimestres.length];
+      const archivos = [
+        { nombre: `evidencia_${aprendizId}_1.pdf`, tipo: 'pdf' },
+        { nombre: `evidencia_${aprendizId}_2.pdf`, tipo: 'pdf' }
+      ];
+      const entregas = acts.map(act => ({
+        actividadId: act.id,
+        entregado: false,
+        retro: '',
+        revisado: false
+      }));
+      data = { entregas, archivos, trimestre };
+      localStorage.setItem(key, JSON.stringify(data));
+      return data;
+    }
+    function saveAprendizData(aprendizId, data) {
+      const key = `aprendiz_ficha_${aprendizId}`;
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+    // Renderizar ficha
+    function renderFicha(ficha) {
+      document.getElementById('ficha-nombre').textContent = ficha.nombre;
+      document.getElementById('ficha-info').innerHTML = `
+        <strong>Programa:</strong> ${ficha.programa}<br>
+        <strong>Trimestre:</strong> ${ficha.trimestre}
+      `;
+    }
+    // Renderizar filtro de trimestres
+    function renderFiltroTrimestre(ficha) {
+      const select = document.getElementById('filtro-trimestre');
+      const trimestresSet = new Set();
+      ficha.aprendices.forEach((apr, idx) => {
+        const data = getAprendizData(apr.id, idx);
+        trimestresSet.add(data.trimestre);
+      });
+      select.innerHTML = '<option value="todos">Todos</option>';
+      Array.from(trimestresSet).sort().forEach(tri => {
+        select.innerHTML += `<option value="${tri}">${tri}</option>`;
+      });
+    }
+    // Renderizar aprendices y actividades
+    function renderAprendices(ficha, filtroTrimestre = 'todos') {
+      const actividades = getActividades();
+      const cont = document.getElementById('lista-aprendices');
+      cont.innerHTML = '';
+      let hayAprendices = false;
+      ficha.aprendices.forEach((apr, idx) => {
+        const data = getAprendizData(apr.id, idx);
+        if (filtroTrimestre !== 'todos' && data.trimestre !== filtroTrimestre) return;
+        hayAprendices = true;
+        const div = document.createElement('div');
+        div.className = 'card-aprendiz';
+        div.innerHTML = `
+          <h4>${apr.nombre} <span class="trimestre-badge">Trimestre ${data.trimestre}</span></h4>
+          <div class="archivos-aprendiz">
+            <strong>Archivos subidos:</strong>
+            ${data.archivos.map(arch => `<button class="btn-descargar" data-apr="${apr.id}" data-archivo="${arch.nombre}">${arch.nombre}</button>`).join(' ')}
+          </div>
+          <table class="tabla-actividades">
+            <thead><tr><th>Actividad</th><th>Competencia</th><th>Archivo</th><th>Estado</th><th>Retroalimentación</th><th>Revisado</th></tr></thead>
+            <tbody>
+              ${actividades.map((act, idx2) => {
+                const entrega = data.entregas[idx2];
+                return `<tr>
+                  <td>${act.nombre}</td>
+                  <td>${act.competencia || ''}</td>
+                  <td>${act.archivoNombre ? `<button class='btn-descargar-actividad' data-archivo='${act.archivoNombre}'>${act.archivoNombre}</button>` : ''}</td>
+                  <td>${entrega && entrega.entregado ? 'Entregado' : 'Pendiente'}</td>
+                  <td><input type="text" value="${entrega ? entrega.retro : ''}" data-apr="${apr.id}" data-act="${act.id}" class="input-retro" /></td>
+                  <td><input type="checkbox" ${entrega && entrega.revisado ? 'checked' : ''} data-apr="${apr.id}" data-act="${act.id}" class="input-revisado" /></td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+        cont.appendChild(div);
+      });
+      if (!hayAprendices) {
+        cont.innerHTML = '<div style="text-align:center;color:#888;font-size:1.1em;margin-top:20px;">No hay aprendices para este filtro.</div>';
+      }
+      // Eventos para retroalimentación y revisado
+      document.querySelectorAll('.input-retro').forEach(input => {
+        input.addEventListener('change', function() {
+          const aprId = this.getAttribute('data-apr');
+          const actId = this.getAttribute('data-act');
+          const data = getAprendizData(aprId);
+          const entrega = data.entregas.find(e => e.actividadId === actId);
+          entrega.retro = this.value;
+          saveAprendizData(aprId, data);
+        });
+      });
+      document.querySelectorAll('.input-revisado').forEach(chk => {
+        chk.addEventListener('change', function() {
+          const aprId = this.getAttribute('data-apr');
+          const actId = this.getAttribute('data-act');
+          const data = getAprendizData(aprId);
+          const entrega = data.entregas.find(e => e.actividadId === actId);
+          entrega.revisado = this.checked;
+          saveAprendizData(aprId, data);
+          // Cambiar el estado en la celda
+          const tdEstado = this.closest('tr').querySelector('td:nth-child(4)');
+          if (tdEstado) tdEstado.textContent = this.checked ? 'Revisado' : 'Pendiente';
+          // Actualizar gráfica
+          renderGraficoAvance(getFicha());
+        });
+      });
+      // Evento para descargar archivos de aprendices
+      document.querySelectorAll('.btn-descargar').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const aprId = this.getAttribute('data-apr');
+          const archivo = this.getAttribute('data-archivo');
+          descargarArchivoSimulado(aprId, archivo);
+        });
+      });
+      // Evento para descargar archivos de actividades
+      document.querySelectorAll('.btn-descargar-actividad').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const archivo = this.getAttribute('data-archivo');
+          descargarArchivoActividadSimulado(archivo);
+        });
+      });
+    }
+    // Simulación de descarga de archivo PDF
+    function descargarArchivoSimulado(aprendizId, archivoNombre) {
+      const contenido = `Simulación de archivo PDF para ${archivoNombre}\nAprendiz: ${aprendizId}`;
+      const blob = new Blob([contenido], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = archivoNombre;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
+    }
+    // Simulación de descarga de archivo de actividad
+    function descargarArchivoActividadSimulado(archivoNombre) {
+      const contenido = `Simulación de archivo de actividad: ${archivoNombre}`;
+      const blob = new Blob([contenido], { type: 'application/octet-stream' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = archivoNombre;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
+    }
+    let graficoAvanceInstance = null;
+    // Renderizar gráfica general de avances
+    function renderGraficoAvance(ficha) {
+      const actividades = getActividades();
+      const total = ficha.aprendices.length * actividades.length;
+      let revisados = 0;
+      ficha.aprendices.forEach((apr, idx) => {
+        const data = getAprendizData(apr.id, idx);
+        revisados += data.entregas.filter(e => e.revisado).length;
+      });
+      const ctx = document.getElementById('graficoAvanceFicha').getContext('2d');
+      if (graficoAvanceInstance) {
+        graficoAvanceInstance.destroy();
+      }
+      graficoAvanceInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Revisados', 'Pendientes'],
+          datasets: [{
+            data: [revisados, total - revisados],
+            backgroundColor: ['#277300', '#e9f0ea'],
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { display: true },
+            tooltip: { enabled: true }
+          },
+          cutout: '70%',
+          responsive: false,
+        }
+      });
+    }
+    // --- GESTIÓN DINÁMICA DE ACTIVIDADES ---
+    function getActividades() {
+      const ficha = getFicha();
+      if (!ficha) return [];
+      const key = `actividades_ficha_${ficha.id}`;
+      let acts = localStorage.getItem(key);
+      if (acts) {
+        try { return JSON.parse(acts); } catch {}
+      }
+      // Si no hay, inicializar con las simuladas
+      localStorage.setItem(key, JSON.stringify(actividadesSimuladas));
+      return [...actividadesSimuladas];
+    }
+    function saveActividades(acts) {
+      const ficha = getFicha();
+      if (!ficha) return;
+      const key = `actividades_ficha_${ficha.id}`;
+      localStorage.setItem(key, JSON.stringify(acts));
+    }
+    // Evento para agregar nueva actividad
+    const formNuevaActividad = document.getElementById('form-nueva-actividad');
+    if (formNuevaActividad) {
+      formNuevaActividad.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('nombre-actividad').value.trim();
+        const desc = document.getElementById('desc-actividad').value.trim();
+        const competencia = document.getElementById('comp-actividad').value;
+        const archivoInput = document.getElementById('archivo-actividad');
+        if (!nombre || !desc || !competencia || !archivoInput.files.length) return;
+        const archivo = archivoInput.files[0];
+        const archivoNombre = archivo.name;
+        const acts = getActividades();
+        // Generar id único
+        const id = 'act' + (Date.now());
+        acts.push({ id, nombre, descripcion: desc, competencia, archivoNombre, total: 1 });
+        saveActividades(acts);
+        // Actualizar entregas de todos los aprendices
+        const ficha = getFicha();
+        ficha.aprendices.forEach(apr => {
+          const data = getAprendizData(apr.id);
+          data.entregas.push({ actividadId: id, entregado: false, retro: '', revisado: false });
+          saveAprendizData(apr.id, data);
+        });
+        // Limpiar campos y refrescar
+        document.getElementById('nombre-actividad').value = '';
+        document.getElementById('desc-actividad').value = '';
+        document.getElementById('comp-actividad').selectedIndex = 0;
+        archivoInput.value = '';
+        renderAprendices(getFicha(), document.getElementById('filtro-trimestre').value);
+      });
+    }
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', () => {
+      const ficha = getFicha();
+      if (!ficha) {
+        document.body.innerHTML = '<h2>Ficha no encontrada</h2>';
+        return;
+      }
+      limpiarDatosAprendices(ficha);
+      renderFicha(ficha);
+      renderFiltroTrimestre(ficha);
+      renderAprendices(ficha);
+      renderGraficoAvance(ficha);
+      document.getElementById('filtro-trimestre').addEventListener('change', function() {
+        renderAprendices(ficha, this.value);
+      });
+    });
+  </script>
+</body>
+</html> 
